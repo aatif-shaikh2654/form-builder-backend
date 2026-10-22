@@ -1,0 +1,1077 @@
+[
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_SECRET_KEY",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_ALGORITHM",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "ENV",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_ACCESS_TOKEN_EXPIRE_MINUTES",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_REFRESH_TOKEN_EXPIRE_DAYS",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_ACCESS_TOKEN_EXPIRE_MINUTES",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_SECRET_KEY",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_ALGORITHM",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_REFRESH_TOKEN_EXPIRE_DAYS",
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "isExtraImport": true,
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "Annotated",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Annotated",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Cookie",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi.exceptions",
+        "description": "fastapi.exceptions",
+        "isExtraImport": true,
+        "detail": "fastapi.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi.exceptions",
+        "description": "fastapi.exceptions",
+        "isExtraImport": true,
+        "detail": "fastapi.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi.exceptions",
+        "description": "fastapi.exceptions",
+        "isExtraImport": true,
+        "detail": "fastapi.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "jwt",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "jwt",
+        "description": "jwt",
+        "detail": "jwt",
+        "documentation": {}
+    },
+    {
+        "label": "DeclarativeBase",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Mapped",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "mapped_column",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Mapped",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "mapped_column",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "DateTime",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Uuid",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Boolean",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "DateTime",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Uuid",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "importPath": "app.db.session",
+        "description": "app.db.session",
+        "isExtraImport": true,
+        "detail": "app.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "importPath": "app.db.session",
+        "description": "app.db.session",
+        "isExtraImport": true,
+        "detail": "app.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "UUID",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "app.db.base",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "app.db.base",
+        "description": "app.db.base",
+        "detail": "app.db.base",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "app.db.base",
+        "description": "app.db.base",
+        "isExtraImport": true,
+        "detail": "app.db.base",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "app.db.base",
+        "description": "app.db.base",
+        "isExtraImport": true,
+        "detail": "app.db.base",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "app.modules.auth.models",
+        "description": "app.modules.auth.models",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserRole",
+        "importPath": "app.modules.auth.models",
+        "description": "app.modules.auth.models",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "app.modules.auth.models",
+        "description": "app.modules.auth.models",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "AccessToken",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "LoginPayload",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "LoginResponse",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ProfileResponse",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "SignupPayload",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "SignupResponse",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "AccessToken",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "LoginPayload",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "SignupPayload",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserResponse",
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "login_user",
+        "importPath": "app.modules.auth.service",
+        "description": "app.modules.auth.service",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.service",
+        "documentation": {}
+    },
+    {
+        "label": "signup_user",
+        "importPath": "app.modules.auth.service",
+        "description": "app.modules.auth.service",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.service",
+        "documentation": {}
+    },
+    {
+        "label": "get_current_user",
+        "importPath": "app.core.dependencies",
+        "description": "app.core.dependencies",
+        "isExtraImport": true,
+        "detail": "app.core.dependencies",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_by_id",
+        "importPath": "app.modules.auth.repository",
+        "description": "app.modules.auth.repository",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.repository",
+        "documentation": {}
+    },
+    {
+        "label": "create_user",
+        "importPath": "app.modules.auth.repository",
+        "description": "app.modules.auth.repository",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.repository",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_email",
+        "importPath": "app.modules.auth.repository",
+        "description": "app.modules.auth.repository",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.repository",
+        "documentation": {}
+    },
+    {
+        "label": "login_attempt",
+        "importPath": "app.modules.auth.repository",
+        "description": "app.modules.auth.repository",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.repository",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigDict",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "PasswordHash",
+        "importPath": "pwdlib",
+        "description": "pwdlib",
+        "isExtraImport": true,
+        "detail": "pwdlib",
+        "documentation": {}
+    },
+    {
+        "label": "JSONResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "generic_error_handle",
+        "importPath": "app.utils.exceptions",
+        "description": "app.utils.exceptions",
+        "isExtraImport": true,
+        "detail": "app.utils.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "app.modules.auth.router",
+        "description": "app.modules.auth.router",
+        "isExtraImport": true,
+        "detail": "app.modules.auth.router",
+        "documentation": {}
+    },
+    {
+        "label": "uvicorn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uvicorn",
+        "description": "uvicorn",
+        "detail": "uvicorn",
+        "documentation": {}
+    },
+    {
+        "label": "ENV",
+        "kind": 5,
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "peekOfCode": "ENV = os.getenv(\"ENV\")\nDATABASE_URL = os.getenv(\"DATABASE_URL\")\nJWT_SECRET_KEY= os.getenv(\"JWT_SECRET_KEY\")\nJWT_ALGORITHM= os.getenv(\"JWT_ALGORITHM\")\nJWT_ACCESS_TOKEN_EXPIRE_MINUTES= int(os.getenv(\"JWT_ACCESS_TOKEN_EXPIRE_MINUTES\"))\nJWT_REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv(\"JWT_REFRESH_TOKEN_EXPIRE_DAYS\"))",
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "kind": 5,
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "peekOfCode": "DATABASE_URL = os.getenv(\"DATABASE_URL\")\nJWT_SECRET_KEY= os.getenv(\"JWT_SECRET_KEY\")\nJWT_ALGORITHM= os.getenv(\"JWT_ALGORITHM\")\nJWT_ACCESS_TOKEN_EXPIRE_MINUTES= int(os.getenv(\"JWT_ACCESS_TOKEN_EXPIRE_MINUTES\"))\nJWT_REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv(\"JWT_REFRESH_TOKEN_EXPIRE_DAYS\"))",
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_REFRESH_TOKEN_EXPIRE_DAYS",
+        "kind": 5,
+        "importPath": "app.core.config",
+        "description": "app.core.config",
+        "peekOfCode": "JWT_REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv(\"JWT_REFRESH_TOKEN_EXPIRE_DAYS\"))",
+        "detail": "app.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_current_user",
+        "kind": 2,
+        "importPath": "app.core.dependencies",
+        "description": "app.core.dependencies",
+        "peekOfCode": "def get_current_user(access_token: Annotated[str | None, Cookie()] = None) -> str:\n    if not access_token:\n        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=\"Not authenticated\")\n    try: \n        payload = jwt.decode(access_token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])\n        if payload[\"type\"] != \"access\":\n            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"Invalid access token\")\n        user_id = payload[\"sub\"]\n        if not user_id:\n            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"Invalid access token\")",
+        "detail": "app.core.dependencies",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 6,
+        "importPath": "app.db.base",
+        "description": "app.db.base",
+        "peekOfCode": "class Base(DeclarativeBase):\n    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, index=True, default=uuid.uuid4)\n    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)\n    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)\ndef create_base():\n    Base.metadata.create_all(bind=engine)",
+        "detail": "app.db.base",
+        "documentation": {}
+    },
+    {
+        "label": "create_base",
+        "kind": 2,
+        "importPath": "app.db.base",
+        "description": "app.db.base",
+        "peekOfCode": "def create_base():\n    Base.metadata.create_all(bind=engine)",
+        "detail": "app.db.base",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "kind": 2,
+        "importPath": "app.db.session",
+        "description": "app.db.session",
+        "peekOfCode": "def get_db():\n    db = session()\n    try:\n        yield db\n    except:\n        db.rollback()\n        raise\n    finally:\n        db.close",
+        "detail": "app.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "kind": 5,
+        "importPath": "app.db.session",
+        "description": "app.db.session",
+        "peekOfCode": "engine = create_engine(DATABASE_URL)\nsession = sessionmaker(bind=engine, autoflush=False, autocommit=False)\ndef get_db():\n    db = session()\n    try:\n        yield db\n    except:\n        db.rollback()\n        raise\n    finally:",
+        "detail": "app.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "session",
+        "kind": 5,
+        "importPath": "app.db.session",
+        "description": "app.db.session",
+        "peekOfCode": "session = sessionmaker(bind=engine, autoflush=False, autocommit=False)\ndef get_db():\n    db = session()\n    try:\n        yield db\n    except:\n        db.rollback()\n        raise\n    finally:\n        db.close",
+        "detail": "app.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "UserRole",
+        "kind": 6,
+        "importPath": "app.modules.auth.models",
+        "description": "app.modules.auth.models",
+        "peekOfCode": "class UserRole(str, Enum):\n    USER = \"USER\"\n    ADMIN = \"ADMIN\"\n    SUPERADMIN = \"SUPERADMIN\"\nclass User(Base):\n    __tablename__ = \"users\"\n#   Don't need to add id it is already in the base \n    full_name: Mapped[str] = mapped_column(String, nullable=True)\n    email: Mapped[str] = mapped_column(String, unique=True, nullable=False)\n    password_hash: Mapped[str] = mapped_column(String, unique=True, nullable=False)",
+        "detail": "app.modules.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "app.modules.auth.models",
+        "description": "app.modules.auth.models",
+        "peekOfCode": "class User(Base):\n    __tablename__ = \"users\"\n#   Don't need to add id it is already in the base \n    full_name: Mapped[str] = mapped_column(String, nullable=True)\n    email: Mapped[str] = mapped_column(String, unique=True, nullable=False)\n    password_hash: Mapped[str] = mapped_column(String, unique=True, nullable=False)\n    role: Mapped[UserRole] = mapped_column(SQLAlchemyEnum(UserRole, name=\"user_role\"), nullable=False, default=UserRole.USER)\n    is_active: Mapped[Boolean] = mapped_column(Boolean, default=True)\n    is_email_verified: Mapped[Boolean] = mapped_column(Boolean, default=False)\n    last_login_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=True)",
+        "detail": "app.modules.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_email",
+        "kind": 2,
+        "importPath": "app.modules.auth.repository",
+        "description": "app.modules.auth.repository",
+        "peekOfCode": "def get_user_email(db: Session, email: str):\n    user = db.query(User).filter(User.email == email).first()\n    return user\ndef get_user_by_id(db: Session, user_id: str):\n    user = db.query(User).filter(User.id == user_id).first()\n    return user\ndef create_user(db: Session, user_data, hash_password: str):\n    user = User(\n        full_name=user_data.full_name,\n        email = user_data.email,",
+        "detail": "app.modules.auth.repository",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_by_id",
+        "kind": 2,
+        "importPath": "app.modules.auth.repository",
+        "description": "app.modules.auth.repository",
+        "peekOfCode": "def get_user_by_id(db: Session, user_id: str):\n    user = db.query(User).filter(User.id == user_id).first()\n    return user\ndef create_user(db: Session, user_data, hash_password: str):\n    user = User(\n        full_name=user_data.full_name,\n        email = user_data.email,\n        password_hash = hash_password\n    )\n    db.add(user)",
+        "detail": "app.modules.auth.repository",
+        "documentation": {}
+    },
+    {
+        "label": "create_user",
+        "kind": 2,
+        "importPath": "app.modules.auth.repository",
+        "description": "app.modules.auth.repository",
+        "peekOfCode": "def create_user(db: Session, user_data, hash_password: str):\n    user = User(\n        full_name=user_data.full_name,\n        email = user_data.email,\n        password_hash = hash_password\n    )\n    db.add(user)\n    db.commit()\n    db.refresh(user)\n    return user",
+        "detail": "app.modules.auth.repository",
+        "documentation": {}
+    },
+    {
+        "label": "login_attempt",
+        "kind": 2,
+        "importPath": "app.modules.auth.repository",
+        "description": "app.modules.auth.repository",
+        "peekOfCode": "def login_attempt(db: Session, user: User):\n    user.last_login_at = datetime.now(timezone.utc)\n    db.commit()\n    db.refresh(user)\n    return",
+        "detail": "app.modules.auth.repository",
+        "documentation": {}
+    },
+    {
+        "label": "signup",
+        "kind": 2,
+        "importPath": "app.modules.auth.router",
+        "description": "app.modules.auth.router",
+        "peekOfCode": "def signup(payload: SignupPayload, db: Session = Depends(get_db)):\n    user = signup_user(db, payload)\n    return { \n            \"success\": True,\n            \"message\": \"User signup successfully\",\n            \"data\": user\n        }\n@router.post(\"/login\", response_model=LoginResponse)\ndef login(payload: LoginPayload, response: Response, db: Session = Depends(get_db)):\n    token: AccessToken = login_user(db, payload)",
+        "detail": "app.modules.auth.router",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "kind": 2,
+        "importPath": "app.modules.auth.router",
+        "description": "app.modules.auth.router",
+        "peekOfCode": "def login(payload: LoginPayload, response: Response, db: Session = Depends(get_db)):\n    token: AccessToken = login_user(db, payload)\n    response.set_cookie(\n        key= \"access_token\",\n        value= token[\"access_token\"],\n        httponly=True,\n        secure=False if ENV == \"dev\" else True,\n        samesite=\"Lax\",\n        max_age=JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60\n    )",
+        "detail": "app.modules.auth.router",
+        "documentation": {}
+    },
+    {
+        "label": "get_profile",
+        "kind": 2,
+        "importPath": "app.modules.auth.router",
+        "description": "app.modules.auth.router",
+        "peekOfCode": "def get_profile(user_id: Annotated[str, Depends(get_current_user)], db: Session = Depends(get_db)):\n    user = get_user_by_id(db, user_id)\n    if not user:\n        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=\"User not found\")\n    return {\n        \"success\": True,\n        \"message\": \"Profile data fetched successfully\",\n        \"data\": user\n    }",
+        "detail": "app.modules.auth.router",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "app.modules.auth.router",
+        "description": "app.modules.auth.router",
+        "peekOfCode": "router = APIRouter(prefix=\"/auth\", tags=[\"Auth\"])\n@router.post(\"/signup\", response_model=SignupResponse)\ndef signup(payload: SignupPayload, db: Session = Depends(get_db)):\n    user = signup_user(db, payload)\n    return { \n            \"success\": True,\n            \"message\": \"User signup successfully\",\n            \"data\": user\n        }\n@router.post(\"/login\", response_model=LoginResponse)",
+        "detail": "app.modules.auth.router",
+        "documentation": {}
+    },
+    {
+        "label": "UserResponse",
+        "kind": 6,
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "peekOfCode": "class UserResponse(BaseModel):\n    id: UUID\n    full_name: str\n    email: str\n    role: UserRole\n    is_active: bool\n    is_email_verified: bool\n    last_login_at: datetime\n    model_config = ConfigDict(from_attributes=True)\nclass SignupPayload(BaseModel):",
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "SignupPayload",
+        "kind": 6,
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "peekOfCode": "class SignupPayload(BaseModel):\n    full_name: str\n    email: str\n    password: str\nclass SignupResponse(BaseModel):\n    success: bool\n    message: str\n    data: UserResponse\nclass AccessToken(BaseModel):\n    access_token: str",
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "SignupResponse",
+        "kind": 6,
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "peekOfCode": "class SignupResponse(BaseModel):\n    success: bool\n    message: str\n    data: UserResponse\nclass AccessToken(BaseModel):\n    access_token: str\n    refresh_token: str\nclass LoginPayload(BaseModel):\n    email: str\n    password: str",
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "AccessToken",
+        "kind": 6,
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "peekOfCode": "class AccessToken(BaseModel):\n    access_token: str\n    refresh_token: str\nclass LoginPayload(BaseModel):\n    email: str\n    password: str\nclass LoginResponse(BaseModel):\n    success: bool\n    message: str\n    data: AccessToken",
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "LoginPayload",
+        "kind": 6,
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "peekOfCode": "class LoginPayload(BaseModel):\n    email: str\n    password: str\nclass LoginResponse(BaseModel):\n    success: bool\n    message: str\n    data: AccessToken\nclass ProfileResponse(BaseModel):\n    success: bool\n    message: str",
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "LoginResponse",
+        "kind": 6,
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "peekOfCode": "class LoginResponse(BaseModel):\n    success: bool\n    message: str\n    data: AccessToken\nclass ProfileResponse(BaseModel):\n    success: bool\n    message: str\n    data: UserResponse",
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ProfileResponse",
+        "kind": 6,
+        "importPath": "app.modules.auth.schemas",
+        "description": "app.modules.auth.schemas",
+        "peekOfCode": "class ProfileResponse(BaseModel):\n    success: bool\n    message: str\n    data: UserResponse",
+        "detail": "app.modules.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "hash_password",
+        "kind": 2,
+        "importPath": "app.modules.auth.service",
+        "description": "app.modules.auth.service",
+        "peekOfCode": "def hash_password(password: str):\n    return password_hash.hash(password)\ndef verify_password(plain_pass: str, hash_pass: str):\n    try:\n        return password_hash.verify(plain_pass, hash_pass)\n    except:\n        return False\ndef create_access_token(user_id: str) -> str:\n    now = datetime.now(timezone.utc)\n    payload = {",
+        "detail": "app.modules.auth.service",
+        "documentation": {}
+    },
+    {
+        "label": "verify_password",
+        "kind": 2,
+        "importPath": "app.modules.auth.service",
+        "description": "app.modules.auth.service",
+        "peekOfCode": "def verify_password(plain_pass: str, hash_pass: str):\n    try:\n        return password_hash.verify(plain_pass, hash_pass)\n    except:\n        return False\ndef create_access_token(user_id: str) -> str:\n    now = datetime.now(timezone.utc)\n    payload = {\n        \"sub\": str(user_id),\n        \"type\": \"access\",",
+        "detail": "app.modules.auth.service",
+        "documentation": {}
+    },
+    {
+        "label": "create_access_token",
+        "kind": 2,
+        "importPath": "app.modules.auth.service",
+        "description": "app.modules.auth.service",
+        "peekOfCode": "def create_access_token(user_id: str) -> str:\n    now = datetime.now(timezone.utc)\n    payload = {\n        \"sub\": str(user_id),\n        \"type\": \"access\",\n        \"exp\": now + + timedelta(minutes=JWT_ACCESS_TOKEN_EXPIRE_MINUTES),\n        \"iat\": datetime.now(timezone.utc)\n    }\n    return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)\ndef create_refresh_token(user_id: str) -> str:",
+        "detail": "app.modules.auth.service",
+        "documentation": {}
+    },
+    {
+        "label": "create_refresh_token",
+        "kind": 2,
+        "importPath": "app.modules.auth.service",
+        "description": "app.modules.auth.service",
+        "peekOfCode": "def create_refresh_token(user_id: str) -> str:\n    now = datetime.now(timezone.utc)\n    payload = {\n        \"sub\": str(user_id),\n        \"type\": \"refresh\",\n        \"iat\": now,\n        \"exp\": now + timedelta(minutes=JWT_REFRESH_TOKEN_EXPIRE_DAYS)\n    }\n    return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)\ndef signup_user(db: Session, payload: SignupPayload) -> UserResponse:",
+        "detail": "app.modules.auth.service",
+        "documentation": {}
+    },
+    {
+        "label": "signup_user",
+        "kind": 2,
+        "importPath": "app.modules.auth.service",
+        "description": "app.modules.auth.service",
+        "peekOfCode": "def signup_user(db: Session, payload: SignupPayload) -> UserResponse:\n    existing_user = get_user_email(db, payload.email)\n    if existing_user:\n        raise HTTPException(status_code=status.HTTP_302_FOUND, detail=\"Email already exists\")\n    password_hash = hash_password(payload.password)\n    user = create_user(db, payload, password_hash)\n    return user\ndef login_user(db: Session, payload: LoginPayload) -> AccessToken:\n    user = get_user_email(db, payload.email)\n    if not user:",
+        "detail": "app.modules.auth.service",
+        "documentation": {}
+    },
+    {
+        "label": "login_user",
+        "kind": 2,
+        "importPath": "app.modules.auth.service",
+        "description": "app.modules.auth.service",
+        "peekOfCode": "def login_user(db: Session, payload: LoginPayload) -> AccessToken:\n    user = get_user_email(db, payload.email)\n    if not user:\n        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=\"Email doesn't exist\")\n    if not verify_password(payload.password, user.password_hash):\n        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"Invalid credentials\")\n    login_attempt(db, user)\n    access_token = create_access_token(user.id)\n    refresh_token = create_refresh_token(user.id)\n    return { ",
+        "detail": "app.modules.auth.service",
+        "documentation": {}
+    },
+    {
+        "label": "password_hash",
+        "kind": 5,
+        "importPath": "app.modules.auth.service",
+        "description": "app.modules.auth.service",
+        "peekOfCode": "password_hash = PasswordHash.recommended()\ndef hash_password(password: str):\n    return password_hash.hash(password)\ndef verify_password(plain_pass: str, hash_pass: str):\n    try:\n        return password_hash.verify(plain_pass, hash_pass)\n    except:\n        return False\ndef create_access_token(user_id: str) -> str:\n    now = datetime.now(timezone.utc)",
+        "detail": "app.modules.auth.service",
+        "documentation": {}
+    },
+    {
+        "label": "FormType",
+        "kind": 6,
+        "importPath": "app.modules.forms.models",
+        "description": "app.modules.forms.models",
+        "peekOfCode": "class FormType(Enum):\n    QUIZ = \"QUIZ\"\nclass Form(Base):\n    __tablename__ = \"forms\"",
+        "detail": "app.modules.forms.models",
+        "documentation": {}
+    },
+    {
+        "label": "Form",
+        "kind": 6,
+        "importPath": "app.modules.forms.models",
+        "description": "app.modules.forms.models",
+        "peekOfCode": "class Form(Base):\n    __tablename__ = \"forms\"",
+        "detail": "app.modules.forms.models",
+        "documentation": {}
+    },
+    {
+        "label": "generic_error_handle",
+        "kind": 2,
+        "importPath": "app.utils.exceptions",
+        "description": "app.utils.exceptions",
+        "peekOfCode": "def generic_error_handle(request: Request, exc: Exception):\n    return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content={\n        \"success\": False,\n        \"message\": str(exc)\n    })\ndef error_handler(status_code: int, message: str):\n    return JSONResponse(status_code=status_code, content={ \"success\": False, \"message\": message })",
+        "detail": "app.utils.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "error_handler",
+        "kind": 2,
+        "importPath": "app.utils.exceptions",
+        "description": "app.utils.exceptions",
+        "peekOfCode": "def error_handler(status_code: int, message: str):\n    return JSONResponse(status_code=status_code, content={ \"success\": False, \"message\": message })",
+        "detail": "app.utils.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app.app",
+        "description": "app.app",
+        "peekOfCode": "app = FastAPI()\n# DB Create base\ndb.create_base()\n# Middlewares\napp.add_exception_handler(Exception, generic_error_handle)\n# Routers\napp.include_router(auth_router)",
+        "detail": "app.app",
+        "documentation": {}
+    }
+]
