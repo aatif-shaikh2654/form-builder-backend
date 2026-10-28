@@ -22,8 +22,9 @@ class User(Base):
     is_email_verified: Mapped[bool] = mapped_column(Boolean, default=False)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=True)
 
-    forms = relationship("Form", back_populates="user")
-    form_collaborators = relationship("FormCollaborator", back_populates="user")
+    forms = relationship("Form", back_populates="user", cascade="all, delete-orphan")
+    form_collaborators = relationship("FormCollaborator", back_populates="user", cascade="all, delete-orphan")
+    submissions = relationship("Submission", back_populates="user")
 
 class GuestSession(Base):
 

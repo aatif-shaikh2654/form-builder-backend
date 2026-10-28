@@ -1,9 +1,9 @@
 from app.db.database import Base
 from enum import Enum
-from sqlalchemy import String, ForeignKey, Enum as SQLAlchemyEnum, DateTime, Boolean, Integer, CheckConstraint, Numeric
+from sqlalchemy import String, ForeignKey, Enum as SQLAlchemyEnum, DateTime, Boolean, Integer, CheckConstraint, Numeric, ARRAY
 from sqlalchemy.orm import mapped_column, relationship, Mapped
 from sqlalchemy.dialects.postgresql import JSONB, UUID
-from datetime import datetime
+from datetime import datetime, timezone
 from decimal import Decimal
 
 class FormType(Enum):
@@ -38,7 +38,8 @@ class Form(Base):
     field_conditions = relationship("FieldConditions", back_populates="form", cascade="all, delete-orphan")
     form_collaborators = relationship("FormCollaborator", back_populates="form", cascade="all, delete-orphan")
     form_share_links = relationship("FormShareLink", back_populates="form", cascade="all, delete-orphan")
-    guest_session = relationship("GuestSession", back_populates="forms", cascade="all, delete-orphan")
+    guest_session = relationship("GuestSession", back_populates="forms")
+    submissions = relationship("Submission", back_populates="form", cascade="all, delete-orphan")
 
 class FormSettings(Base):
     __tablename__ = "form_settings"
@@ -62,6 +63,9 @@ class FormSettings(Base):
         ),
     )
 
+class LayoutType(Enum):
+    GRID = "GRID"
+    SINGLE_COLUMN = "SINGLE_COLUMN"
 class FormSection(Base):
     __tablename__ = "sections"
 
@@ -69,9 +73,20 @@ class FormSection(Base):
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str | None] = mapped_column(String, nullable=True)
     position: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    layout_type: Mapped[LayoutType] = mapped_column(SQLAlchemyEnum(LayoutType, name="layout_type"), nullable=False, default=LayoutType.SINGLE_COLUMN)
+    column_count: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    layout_config: Mapped[dict] = mapped_column(JSONB, default={})
+    is_visible: Mapped[bool] = mapped_column(Boolean, default=True)
 
     form = relationship("Form", back_populates="sections")
     fields = relationship("FormField", back_populates="section", cascade="all, delete-orphan")
+
+    __table_args__ = (
+        CheckConstraint(
+            "column_count >= 1 AND column_count <= 12",
+            name="check_column_count_range",
+        ),
+    )
 
 class FieldType(Enum):
     SHORT_TEXT = "SHORT_TEXT"
@@ -101,6 +116,7 @@ class FormField(Base):
     field_type: Mapped[FieldType] = mapped_column(SQLAlchemyEnum(FieldType, name="field_type"), default=FieldType.SHORT_TEXT)
     placeholder: Mapped[str | None] = mapped_column(String(255), nullable=True)
     is_required: Mapped[bool] = mapped_column(Boolean, default=False)
+    values: Mapped[list[str] | None] = mapped_column(ARRAY(String), nullable=True, default=list)
     position: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     validation_rules: Mapped[dict] = mapped_column(JSONB, default=dict, nullable=False)
     default_values: Mapped[dict] = mapped_column(JSONB, nullable=True)
@@ -112,7 +128,7 @@ class FormField(Base):
     field_answer_key = relationship("FieldAnswerKey", back_populates="fields", cascade="all, delete-orphan")
     conditions_as_source = relationship("FieldConditions", foreign_keys="FieldConditions.source_field_id", back_populates="source_field", cascade="all, delete-orphan")
     conditions_as_target = relationship("FieldConditions", foreign_keys="FieldConditions.target_field_id", back_populates="target_field", cascade="all, delete-orphan")
-
+    submission_answers = relationship("SubmissionAnswer", back_populates="field", cascade="all, delete-orphan")
 
 class QuizSettings(Base):
     __tablename__ = "quiz_settings"
@@ -219,4 +235,33 @@ class FormShareLink(Base):
 
     form = relationship("Form", back_populates="form_share_links")
 
+class SubmissionStatus(Enum):
+    IN_PROGRESS = "IN_PROGRESS"
+    SUBMITTED = "SUBMITTED"
+    ABANDONED = "ABANDONED"
 
+class Submission(Base):
+    __tablename__ = "submissions"
+
+    form_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("forms.id"), nullable=False)
+    respondent_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+    response_number: Mapped[int] = mapped_column(Integer, nullable=True)
+    status: Mapped[SubmissionStatus] = mapped_column(SQLAlchemyEnum(SubmissionStatus, name="status"), nullable=False, default=SubmissionStatus.IN_PROGRESS)
+    started_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=True, default=lambda: datetime.now(timezone.utc))
+    submitted_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=True)
+    respondent_metadata: Mapped[JSONB] = mapped_column(JSONB, nullable=True, default={})
+
+    form = relationship("Form", back_populates="submissions")
+    user = relationship("User", back_populates="submissions")
+    submission_answers = relationship("SubmissionAnswer", back_populates="submission", cascade="all, delete-orphan")
+
+class SubmissionAnswer(Base):
+    __tablename__ = "submission_answers"
+
+    submission_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("submissions.id"), nullable=False)
+    field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id"), nullable=False)
+    answer_text: Mapped[str] = mapped_column(String, nullable=True)
+    answer_json: Mapped[JSONB] = mapped_column(JSONB, nullable=True)
+
+    submission = relationship("Submission", back_populates="submission_answers")
+    field = relationship("FormField", back_populates="submission_answers")

@@ -1,9 +1,8 @@
-from fastapi import APIRouter
-from app.db.session import DbSession, session
-from app.modules.forms.schemas import (AddEditFieldResponse, AddEditSectionResponse,
-    AddFieldPayload, AddSectionPayload, CreateFormPayload, CreateFormResponse, EditFieldPayload,
-    EditFormPayload, EditFormResponse, EditSectionPayload, GetAllFormsResponse,
-    GetSingleFormResponse, UpdateQuizSettingsPayload,
+from fastapi import APIRouter, Request
+from app.db.session import DbSession
+from app.modules.forms.schemas import (CreateFormPayload, CreateFormResponse, EditFormPayload,
+    EditFormResponse, GetAllFormsResponse, GetSingleFormResponse, PublishFormResponse,
+    SaveFormPayload, SaveFormResponse, SubmissionPayload, UpdateQuizSettingsPayload,
     UpdateQuizSettingsResponse, UpdateSettingsPayload, UpdateSettingsResponse)
 from app.core.dependencies import GetGuestSession
 from app.modules.forms.service import (
@@ -14,14 +13,13 @@ from app.modules.forms.service import (
     update_form_settings_service, 
     update_quiz_settings_service, 
     delete_form_service, 
-    add_section_service, 
-    edit_section_service, 
-    delete_section_service, 
-    add_field_service, 
-    edit_field_service, 
-    delete_form_service
+    delete_form_service,
+    publish_form_service,
+    save_draft_form_service,
+    submit_form_service
 )
 from app.common.schema import APIResponse
+from app.modules.forms.models import FormType
 
 
 router = APIRouter(prefix="/form", tags=["Forms"])
@@ -50,9 +48,15 @@ async def edit_form(form_id: str, payload: EditFormPayload, session: GetGuestSes
     }
 
 @router.get("/all", response_model=GetAllFormsResponse)
-async def get_all_forms(session: GetGuestSession, db: DbSession):
+async def get_all_forms(session: GetGuestSession, db: DbSession, page: int | None, limit: int | None, form_type: FormType | None = None, search: str | None = None):
 
-    response = await get_all_forms_service(session, db)
+    query = {
+        "page": page,
+        "limit": limit,
+        "form_type": form_type,
+        "search": search,
+    }
+    response = await get_all_forms_service(query, session=session, db=db)
 
     return {
         "success": True,
@@ -103,66 +107,35 @@ async def update_quiz_settings(form_id: str, payload: UpdateQuizSettingsPayload,
         "data": response
     }
 
-@router.post("/{form_id}/section", response_model=AddEditSectionResponse)
-async def add_form_section(form_id: str, payload: AddSectionPayload, session: GetGuestSession, db: DbSession):
+@router.post("/{form_id}/publish", response_model=PublishFormResponse)
+async def publish_form(form_id: str, session: GetGuestSession, db: DbSession):
 
-    response = await add_section_service(form_id, payload, session, db)
+    response = await publish_form_service(form_id, session, db)
 
     return {
         "success": True,
-        "message": "Section added successfully",
+        "message": "Form published successfully",
         "data": response
     }
 
-@router.patch("/section/{section_id}", response_model=AddEditSectionResponse)
-async def update_form_section(section_id: str, payload: EditSectionPayload, _: GetGuestSession, db: DbSession):
+@router.put("/{form_id}/save-draft", response_model=SaveFormResponse)
+async def save_draft_form(form_id: str, payload: SaveFormPayload, session: GetGuestSession, db: DbSession):
 
-    response = await edit_section_service(section_id, payload, db)
+    response = await save_draft_form_service(form_id, payload, session, db)
 
     return {
         "success": True,
-        "message": "Section updated successfully",
+        "message": "Form saved successfully",
         "data": response
     }
 
-@router.delete("/section/{section_id}", response_model=APIResponse)
-async def delete_form_section(section_id: str, _: GetGuestSession, db: DbSession):
 
-    await delete_section_service(section_id, db)
+@router.post("/{form_id}/submit", response_model=APIResponse)
+async def submit_form(form_id: str, payload: SubmissionPayload, session: GetGuestSession, db: DbSession):
+
+    await submit_form_service(form_id, payload, session, db)
 
     return {
         "success": True,
-        "message": "Section deleted successfully",
-    }
-
-@router.post("/field", response_model=AddEditFieldResponse)
-async def add_form_field(payload: AddFieldPayload, session: GetGuestSession, db: DbSession):
-
-    response = await add_field_service(payload, session, db)
-    
-    return {
-        "success": True,
-        "message": "field added successfully",
-        "data": response 
-    }
-
-@router.patch("/field/{field_id}", response_model=AddEditFieldResponse)
-async def update_form_field(field_id: str, payload: EditFieldPayload, _: GetGuestSession, db: DbSession):
-
-    response = await edit_field_service(field_id, payload, db)
-        
-    return {
-        "success": True,
-        "message": "field updated successfully",
-        "data": response 
-    }
-
-@router.delete("/field/{field_id}", response_model=APIResponse)
-async def delete_form_field(field_id: str, _: GetGuestSession, db: DbSession):
-
-    await delete_section_service(field_id, db)
-    
-    return {
-        "success": True,
-        "message": "field deleted successfully",
+        "message": "form submitted successfully"
     }

@@ -32,28 +32,22 @@ async def login_attempt(db: AsyncSession, user: User):
 
     return
 
-async def get_or_create_guest_session(session_token: str, db: AsyncSession) -> GuestSession:
+async def get_guest_session(session_token: str, db: AsyncSession) -> GuestSession:
+    guest_session = await db.execute(
+        select(GuestSession).where(
+            GuestSession.session_token == session_token, 
+            GuestSession.expires_at > datetime.now(timezone.utc)
+        )
+    ) 
 
-    async def create_session(db):
-        guest_session = GuestSession(expires_at=datetime.now(timezone.utc) + timedelta(days=30))
-        
-        db.add(guest_session)
-        await db.commit()
-        await db.refresh(guest_session)
+    return guest_session.scalar_one_or_none()
 
-        return guest_session
 
-    if session_token:
-        guest_session = await db.execute(
-            select(GuestSession).where(
-                GuestSession.session_token == session_token, 
-                GuestSession.expires_at > datetime.now(timezone.utc)
-            )
-        ) 
+async def create_guest_session(db):
+    guest_session = GuestSession(expires_at=datetime.now(timezone.utc) + timedelta(days=30))
+    
+    db.add(guest_session)
+    await db.commit()
+    await db.refresh(guest_session)
 
-        if guest_session:
-            return guest_session.scalar_one_or_none()
-        else: 
-            return await create_session(db)
-    else: 
-        return await create_session(db)
+    return guest_session

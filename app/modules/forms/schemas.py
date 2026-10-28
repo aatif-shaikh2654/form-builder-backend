@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from app.common.schema import APIResponse, ModelType
-from app.modules.forms.models import FieldType, FormStatus, FormType
+from app.modules.forms.models import FieldType, FormStatus, FormType, LayoutType, SubmissionStatus
 from uuid import UUID
 from datetime import datetime
 from decimal import Decimal
@@ -40,10 +40,7 @@ class QuizSettingsType(BaseModel):
 class QuizSettingsResponse(ModelType, QuizSettingsType):
     form_id: UUID
 
-class SectionsType(BaseModel):
-    title: str
-    description: str | None
-    position: int
+
 
 class FieldsType(BaseModel):
     form_id: UUID | None
@@ -53,6 +50,7 @@ class FieldsType(BaseModel):
     field_type: FieldType
     placeholder: str | None
     is_required: bool
+    values: list[str] | None = None
     position: int
     validation_rules: dict
     default_values: dict
@@ -61,9 +59,19 @@ class FieldsType(BaseModel):
 class FieldsResponse(ModelType, FieldsType):
     pass
 
+class SectionsType(BaseModel):
+    title: str
+    description: str | None = None
+    position: int = 0
+    layout_type: LayoutType = LayoutType.SINGLE_COLUMN
+    column_count: int = 1
+    layout_config: dict = {}
+    is_visible: bool = True
+    fields: list[FieldsResponse] = []
+
 class SectionResponse(ModelType, SectionsType):
     form_id: UUID
-    fields: list[FieldsResponse]
+    fields: list[FieldsResponse] = []
 
 # Create form Types    
 class CreateFormPayload(BaseModel):
@@ -87,13 +95,28 @@ class EditFormResponse(APIResponse):
 
 
 # Get all forms type
+
+
+class StatsResponse(BaseModel): 
+    total_forms: int | None
+    published: int | None
+    drafts: int | None
+    quizes: int | None
+class GetAllFormQueryResponse(BaseModel):
+    items: list[FormResponse]
+    stats: StatsResponse
+    page: int | None
+    limit: int | None
+    total: int | None
+    total_pages: int | None
+
 class GetAllFormsResponse(APIResponse):
-    data: list[FormResponse]
+    data: GetAllFormQueryResponse
 
 # Get signle form type
 class SingleForm(FormResponse):
-    form_settings: FormSettingsResponse
-    quiz_settings: QuizSettingsResponse
+    form_settings: FormSettingsResponse | None
+    quiz_settings: QuizSettingsResponse | None
     sections: list[SectionResponse]
     fields: list[FieldsResponse]
 
@@ -115,34 +138,35 @@ class UpdateQuizSettingsPayload(QuizSettingsType):
 class UpdateQuizSettingsResponse(APIResponse):
     data: QuizSettingsResponse
 
-# Form Section types
-class AddSectionPayload(SectionsType):
-    pass
+# Publish form type
+class PublishFormResponse(APIResponse):
+    data: FormResponse
 
-class EditSectionPayload(BaseModel):
+# Save form types
+class SaveFormPayload(BaseModel):
     title: str | None
     description: str | None
-    position: int | None
+    sections: list[dict] | list[SectionResponse] | list[SectionsType] = []
+    fields: list[dict] | list[FieldsResponse] | list[FieldsType] = []
 
-class AddEditSectionResponse(APIResponse):
-    data: SectionResponse
+class SaveFormResponse(APIResponse):
+    data: SingleForm
 
-# Form Fields types
-class AddFieldPayload(FieldsType):
-    pass
+# User Form submission
+class SubmissionType(ModelType):
+    form_id: UUID
+    respondent_id: UUID
+    response_number: int | None
+    status: SubmissionStatus
+    started_at: datetime
+    submitted_at: datetime
+    respondent_metadata: dict
 
-class EditFieldPayload(BaseModel):
-    form_id: UUID | None
-    section_id: UUID | None
-    label: str | None
-    description: str | None
-    field_type: FieldType | None
-    placeholder: str | None
-    is_required: bool | None
-    position: int | None
-    validation_rules: dict | None
-    default_values: dict | None
-    settings: dict | None
-
-class AddEditFieldResponse(APIResponse):
-    data: FieldsResponse
+class AnswerResponse(BaseModel):
+    field_id: UUID
+    answer_text: str
+    answer_json: dict
+class SubmissionPayload(BaseModel):
+    respondent_metadata: dict
+    answers: list[AnswerResponse]
+    

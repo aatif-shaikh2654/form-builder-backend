@@ -13,12 +13,11 @@ class UserResponse(ModelType):
     is_email_verified: bool
     last_login_at: datetime
 
-    model_config = ConfigDict(from_attributes=True)
-
 class SignupPayload(BaseModel):
     full_name: str
     email: str
     password: str
+    session_token: str | None
 
 class SignupResponse(APIResponse):
     data: UserResponse
@@ -30,6 +29,7 @@ class AccessTokens(BaseModel):
 class LoginPayload(BaseModel):
     email: str
     password: str
+    session_token: str | None
 
 class LoginResponse(APIResponse):
     pass
@@ -43,6 +43,11 @@ class RefreshTokenPayload(BaseModel):
 class RefreshTokenResponse(APIResponse):
     pass
 
-class GetGuestResponse(BaseModel):
-    user_id: str | None
-    session_id: str | None
+class GuestUser(BaseModel):
+    user_id: UUID | None
+    session_token: str | None
+class GetGuestResponse(GuestUser):
+    session_id: UUID | None
+
+class GetGuestSessionResponse(APIResponse):
+    data: GuestUser
