@@ -5,7 +5,7 @@ from app.modules.forms.schemas import (FieldsResponse, FieldsType, FormResponse,
 from pydantic import BaseModel
 from datetime import datetime
 from uuid import UUID
-from app.modules.forms.models import SubmissionStatus
+from app.modules.form_versioning.models import SubmissionStatus
 # Save form types
 class SaveFormPayload(BaseModel):
     title: str | None
@@ -38,17 +38,20 @@ class GetPublishedFormResponse(APIResponse):
 # User Form submission
 class SubmissionType(ModelType):
     form_id: UUID
-    respondent_id: UUID
+    respondent_id: UUID | None
     response_number: int | None
     status: SubmissionStatus
-    started_at: datetime
-    submitted_at: datetime
+    started_at: datetime | None
+    submitted_at: datetime | None
     respondent_metadata: dict
 
 class AnswerResponse(BaseModel):
     field_id: UUID
-    answer_text: str
-    answer_json: dict
+    answer_text: str | None
+    answer_json: dict | list | None
+
+class AnswerType(ModelType, AnswerResponse):
+    pass
 class SubmissionPayload(BaseModel):
     respondent_metadata: dict
     answers: list[AnswerResponse]

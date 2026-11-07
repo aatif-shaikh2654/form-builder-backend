@@ -12,3 +12,14 @@ class ModelType(BaseModel):
     updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class UploadType(BaseModel):
+    id: str
+    original_name: str
+    stored_filename: str
+    path: str
+    mime_type: str
+    size: int
+class UploadFileResponse(APIResponse):
+    data: list[UploadType]

@@ -20,7 +20,7 @@ async def create_user(db: AsyncSession, user_data, hash_password: str):
 
     db.add(user)
     await db.commit()
-    await db.refresh(user)
+    await db.flush()
 
     return user
 

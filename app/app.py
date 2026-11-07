@@ -6,8 +6,12 @@ from app.utils.exceptions import generic_error_handle
 from app.modules.auth.router import router as auth_router
 from app.modules.forms.router import router as forms_router
 from app.modules.form_versioning.router import router as form_versioning_router
-
+from app.modules.analytics.router import router as analytics_router
 from app.core.config import ALLOW_ORIGINS
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+
+
 
 app = FastAPI()
 
@@ -23,8 +27,17 @@ app.add_middleware(
     allow_methods=["*"]
 )
 
+# Uploads 
+UPLOAD_DIR = Path("uploads").resolve()
+app.mount(
+    "/uploads",
+    StaticFiles(directory=UPLOAD_DIR),
+    name="uploads"
+)
+
 # Routers
 prefix = "/api/v1"
 app.include_router(auth_router, prefix=prefix)
 app.include_router(forms_router, prefix=prefix)
 app.include_router(form_versioning_router, prefix=prefix)
+app.include_router(analytics_router, prefix=prefix)

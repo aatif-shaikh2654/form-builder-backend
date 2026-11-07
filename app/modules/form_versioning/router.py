@@ -1,10 +1,11 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Form, UploadFile, File
 from app.modules.form_versioning.schema import (DraftFormResponse, GetPublishedFormResponse,
     PublishFormResponse, SaveFormPayload, SaveFormResponse, SubmissionPayload)
 from app.core.dependencies import GetGuestSession
 from app.db.session import DbSession
 from app.modules.form_versioning.service import publish_form_service, save_draft_form_service, get_draft_form_service, get_published_form_service, submit_form_service
 from app.common.schema import APIResponse
+from app.utils.uploads import save_upload_file
 
 
 router = APIRouter(prefix="/form", tags=["Form versioning"])
@@ -53,13 +54,31 @@ async def get_published_form(slug: str, db: DbSession):
         "data": response
     }
 
-@router.post("/{form_id}/submit", response_model=APIResponse)
-async def submit_form(form_id: str, payload: SubmissionPayload, session: GetGuestSession, db: DbSession):
+@router.post("/upload")
+async def upload_files(files: list[UploadFile]):
 
-    await submit_form_service(form_id, payload, session, db)
+    uploaded_files = []
+
+    for file in files:
+        metadata = await save_upload_file(file, "uploads/submission")
+        uploaded_files.append(metadata)
+
+    return {
+        "success": True,
+        "message": "Files uploaded successfully",
+        "data": uploaded_files
+    }
+
+@router.post("/{form_id}/submit", response_model=APIResponse)
+async def submit_form(
+    form_id: str, 
+    payload: SubmissionPayload, 
+    db: DbSession
+):
+
+    await submit_form_service(form_id, payload, db=db)
 
     return {
         "success": True,
         "message": "form submitted successfully"
     }
-

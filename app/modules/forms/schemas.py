@@ -15,6 +15,9 @@ class FormResponse(ModelType):
     status: FormStatus
     slug: str | None
     published_at: datetime | None
+    current_published_version_id: UUID | None
+    published_version: int | None
+    draft_version: int | None
 
 class FormSettingsType(BaseModel):
     confirmation_message: str | None
@@ -50,6 +53,7 @@ class FieldsType(BaseModel):
     field_type: FieldType
     placeholder: str | None
     is_required: bool
+    is_multiple: bool | None
     values: list[str] | None = None
     position: int
     validation_rules: dict
@@ -84,19 +88,17 @@ class CreateFormResponse(APIResponse):
 
 
 # Edit form types
-class EditFormPayload(BaseModel):
+class EditFormPayload(FormSettingsType):
     title: str | None
     description: str | None
     form_type: FormType | None
     status: FormStatus | None
 
 class EditFormResponse(APIResponse):
-    data: EditFormPayload
+    data: FormResponse
 
 
 # Get all forms type
-
-
 class StatsResponse(BaseModel): 
     total_forms: int | None
     published: int | None
@@ -123,13 +125,6 @@ class SingleForm(FormResponse):
 
 class GetSingleFormResponse(APIResponse):
     data: SingleForm
-
-# Update form settings types
-class UpdateSettingsPayload(FormSettingsType):
-    pass
-
-class UpdateSettingsResponse(APIResponse):
-    data: FormSettingsResponse
 
 # Update quiz settings types
 class UpdateQuizSettingsPayload(QuizSettingsType):

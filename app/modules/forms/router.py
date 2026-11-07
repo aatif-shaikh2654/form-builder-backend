@@ -3,14 +3,13 @@ from app.db.session import DbSession
 from app.modules.forms.schemas import (CreateFormPayload, CreateFormResponse, EditFormPayload,
     EditFormResponse, GetAllFormsResponse, GetSingleFormResponse,
     UpdateQuizSettingsPayload,
-    UpdateQuizSettingsResponse, UpdateSettingsPayload, UpdateSettingsResponse)
+    UpdateQuizSettingsResponse)
 from app.core.dependencies import GetGuestSession
 from app.modules.forms.service import (
     create_form_service, 
     edit_form_service, 
     get_all_forms_service, 
     get_single_form_service, 
-    update_form_settings_service, 
     update_quiz_settings_service, 
     delete_form_service, 
     delete_form_service,
@@ -80,17 +79,6 @@ async def delete_form(form_id: str, session: GetGuestSession, db: DbSession):
     return {
         "success": True,
         "message": "Form deleted successfully",
-    }
-
-@router.patch("/{form_id}/settings", response_model=UpdateSettingsResponse)
-async def update_settings(form_id: str, payload: UpdateSettingsPayload, session: GetGuestSession, db: DbSession):
-
-    response = await update_form_settings_service(form_id, payload, session, db)
-
-    return {
-        "success": True,
-        "message": "Setting updated successfully",
-        "data": response
     }
 
 @router.patch("/{form_id}/quiz-settings", response_model=UpdateQuizSettingsResponse)

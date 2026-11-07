@@ -24,7 +24,8 @@ class User(Base):
 
     forms = relationship("Form", back_populates="user", foreign_keys="Form.owner_id", cascade="all, delete-orphan", passive_deletes=True)
     form_collaborators = relationship("FormCollaborator", foreign_keys="FormCollaborator.user_id", back_populates="user", cascade="all, delete-orphan", passive_deletes=True)
-    submissions = relationship("Submission", back_populates="user")
+    versions = relationship("FormVersions", foreign_keys="FormVersions.published_by_id", back_populates="user", cascade="all, delete-orphan", passive_deletes=True)
+    submissions = relationship("Submission", back_populates="user", foreign_keys="Submission.respondent_id")
 
 class GuestSession(Base):
 

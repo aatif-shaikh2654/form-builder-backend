@@ -20,7 +20,7 @@ async def create_form(payload: CreateFormPayload, session: GetGuestResponse, db:
     )
     db.add(form)
     await db.commit()
-    await db.refresh(form)
+    await db.flush()
     return form
 
 
@@ -121,21 +121,26 @@ async def get_single_form(id: str, session: GetGuestResponse, db: AsyncSession):
 
     return form
 
-async def get_form_settings(id: str, db: AsyncSession):
-    result = await db.execute(select(FormSettings).where(FormSettings.id == id))
+async def get_form_settings(form_id: str, db: AsyncSession):
+    result = await db.execute(select(FormSettings).where(FormSettings.form_id == form_id))
 
     return result.scalar_one_or_none()
     
 
 async def create_quiz_settings(form_id: str, db: AsyncSession):
-    quiz_settings = QuizSettings(form_id=form_id)
 
-    await db.commit()
-    await db.refresh(quiz_settings)
+    quiz_settings = (await db.execute(select(QuizSettings).where(QuizSettings.form_id == form_id))).scalar_one_or_none()
+
+    if not quiz_settings:
+        quiz_settings = QuizSettings(form_id=form_id)
+
+        db.add(quiz_settings)
+        await db.commit()
+        await db.refresh(quiz_settings)
 
     return quiz_settings
 
-async def get_quiz_settings(id: str, db: AsyncSession):
-    quiz_settings = await db.execute(select(QuizSettings).where(QuizSettings.id == id))
+async def get_quiz_settings(form_id: str, db: AsyncSession):
+    quiz_settings = await db.execute(select(QuizSettings).where(QuizSettings.form_id == form_id))
 
     return quiz_settings.scalar_one_or_none()

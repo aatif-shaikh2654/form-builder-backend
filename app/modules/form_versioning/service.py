@@ -8,37 +8,42 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.modules.forms.models import Form
 from app.modules.form_versioning.schema import SaveFormPayload, SubmissionPayload
 from app.modules.auth.schemas import GetGuestResponse
-from app.modules.form_versioning.repository import get_latest_draft, update_draft_version, get_latest_draft, get_published_version
+from app.modules.form_versioning.repository import get_latest_draft, update_draft_version, get_latest_draft, get_published_version, store_submission
 
 async def save_draft_form_service(form_id: str, payload: SaveFormPayload, session: GetGuestResponse, db: AsyncSession):
 
     form = await get_single_form(id=form_id, session=session, db=db)
 
-    form.title = payload.title or form.title
-    form.description = payload.description or form.description
+    if payload.title is not None:
+        form.title = payload.title
+
+    if payload.description is not None:
+        form.description = payload.description
 
     from app.modules.forms.models import FormSection, FormField
 
     incoming_sections = payload.sections or []
     existing_sections = {str(s.id): s for s in (form.sections or [])}
+
+    all_existing_fields = list(form.fields or [])
+    
+    for sec in (form.sections or []):
+        all_existing_fields.extend(sec.fields or [])
+
     existing_fields = {
         str(field.id): field 
-        for field in (list(form.fields or []) + [
-            field
-            for sec in (form.sections or [])
-            for field in (sec.fields or [])
-        ])
+        for field in all_existing_fields
     }
 
     incoming_section_ids = set()
     incoming_field_ids = set()
+    processed_field_ids = set()
 
-    section_id_map = {}
     incoming_fields = []
 
     # create / update sections 
     for sec_data in incoming_sections:
-        sec_dict = (sec_data if isinstance(sec_data, dict) else sec_data.model_dump())
+        sec_dict = sec_data if isinstance(sec_data, dict) else sec_data.model_dump()
 
         client_sec_id = str(sec_dict.get("id") or "")
 
@@ -67,14 +72,11 @@ async def save_draft_form_service(form_id: str, payload: SaveFormPayload, sessio
             db.add(section)
             await db.flush()
 
-            if client_sec_id:
-                section_id_map[client_sec_id] = section.id
-
         actual_sec_id = str(section.id)
         incoming_section_ids.add(actual_sec_id)
 
 
-        for field_data in (sec_data.get("fields") or []):
+        for field_data in (sec_dict.get("fields") or []):
             field_dict = (field_data if isinstance(field_data, dict) else field_data.model_dump())
 
             incoming_fields.append((field_dict, section.id))
@@ -88,6 +90,15 @@ async def save_draft_form_service(form_id: str, payload: SaveFormPayload, sessio
     for field_dict, resolved_section_id in incoming_fields:
         client_field_id = str(field_dict.get("id") or "")
 
+        if client_field_id and client_field_id in processed_field_ids:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Duplicate field ID: {client_field_id}",
+            )
+
+        if client_field_id:
+            processed_field_ids.add(client_field_id)
+
         if client_field_id in existing_fields:
             field = existing_fields[client_field_id]
 
@@ -97,6 +108,7 @@ async def save_draft_form_service(form_id: str, payload: SaveFormPayload, sessio
             field.field_type = field_dict.get("field_type", field.field_type)
             field.placeholder = field_dict.get("placeholder", field.placeholder)
             field.is_required = field_dict.get("is_required", field.is_required)
+            field.is_multiple = field_dict.get("is_multiple", field.is_multiple)
             field.values = field_dict.get("values", field.values)
             field.position = field_dict.get("position", field.position)
             field.validation_rules = field_dict.get("validation_rules", field.validation_rules)
@@ -110,8 +122,9 @@ async def save_draft_form_service(form_id: str, payload: SaveFormPayload, sessio
                 description=field_dict.get("description"),
                 field_type=field_dict.get("field_type", "SHORT_TEXT"),
                 placeholder=field_dict.get("placeholder"),
-                values=field_dict.get("fields", []),
+                values=field_dict.get("values", []),
                 is_required=field_dict.get("is_required", False),
+                is_multiple=field_dict.get("is_multiple", False),
                 position=field_dict.get("position", 0),
                 validation_rules=field_dict.get("validation_rules", {}),
                 default_values=field_dict.get("default_values", {}),
@@ -128,37 +141,39 @@ async def save_draft_form_service(form_id: str, payload: SaveFormPayload, sessio
         if field_id not in incoming_field_ids:
             await db.delete(field)
 
-    await db.flush()
-
     # delete removed sections
     for section_id, section in existing_sections.items():
         if section_id not in incoming_section_ids:
             await db.delete(section)
 
+    await db.flush()
+
+    version = await update_draft_version(form_id=form_id, payload=form, db=db)
+    form.draft_version = version.version_number or 0
+
     await db.commit()
 
-    updated_form = await get_single_form(id=form_id, session=session, db=db)
-
-    await update_draft_version(form_id=form_id, payload=updated_form, db=db)
-
-    return updated_form
+    return await get_single_form(id=form_id, session=session, db=db)
 
 async def publish_form_service(form_id: str, session: GetGuestSession, db: AsyncSession):
 
     form = await get_form(id=form_id, session=session, db=db)
     
     slug = form.title.lower().replace(" ", "-")
-    existing_slug = await db.execute(select(Form).where(Form.slug == slug))
+    existing_slug = (await db.execute(select(Form).where(Form.slug == slug, Form.id != form_id))).scalar_one_or_none()
     if existing_slug:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Slug already exists, update the form title")
 
+    now = datetime.now(timezone.utc)
     form.slug = slug
     form.status = "PUBLISHED"
-    form.published_at = datetime.now(timezone.utc)
+    form.published_at = now
 
     latest_version = await get_latest_draft(form_id, db)
 
-    form.current_published_version_id = latest_version.version_number
+    form.current_published_version_id = latest_version.id
+    form.published_version = latest_version.version_number or 0
+    latest_version.published_at = now
 
     await db.commit()
     await db.refresh(form)

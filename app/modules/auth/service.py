@@ -1,6 +1,6 @@
 from app.modules.auth.schemas import (AccessTokens, GetGuestResponse, LoginPayload,
-    RefreshTokenPayload, RefreshTokenResponse, SignupPayload, UserResponse)
-from app.modules.forms.service import get_all_forms_service
+    RefreshTokenResponse, SignupPayload, UserResponse)
+from app.modules.forms.repository import get_all_forms
 from datetime import datetime, timezone, timedelta
 from fastapi.exceptions import HTTPException
 from fastapi import status
@@ -51,14 +51,17 @@ def create_refresh_token(user_id: str) -> str:
 
 async def sync_session_forms(user_id: str, session_token: str | None, db: AsyncSession):
 
-    session = (await db.execute(select(GuestSession).where(GuestSession.session_token == session_token))).scalar_one_or_none()
-
-    if not session.session_token:
+    if not session_token:
         return
 
-    forms = await get_all_forms_service(
+    session = (await db.execute(select(GuestSession).where(GuestSession.session_token == session_token))).scalar_one_or_none()
+
+    if not session:
+        return
+
+    forms = await get_all_forms(
         session={ 
-            "session_token": session_token, 
+            "session_token": session.session_token, 
             "user_id": None, 
             "session_id": None }, 
             db=db
@@ -81,7 +84,7 @@ async def signup_user(db: AsyncSession, payload: SignupPayload) -> UserResponse:
     
     password_hash = hash_password(payload.password)
 
-    user = create_user(db, payload, password_hash)
+    user = await create_user(db, payload, password_hash)
 
     await sync_session_forms(user_id=user.id, session_token=payload.session_token, db=db)
 
