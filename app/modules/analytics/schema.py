@@ -1,10 +1,14 @@
 from pydantic import BaseModel
 from app.common.schema import APIResponse, ModelType
 from app.modules.form_versioning.schema import AnswerType, SubmissionType
-from app.modules.forms.schema import FieldsResponse
+from app.modules.forms.schema import FieldsType
+
+# Field without conditions: submissions don't need them, and loading them would require eager-loading conditions_as_source
+class SubmissionFieldResponse(ModelType, FieldsType):
+    pass
 
 class SubmissionAnswerResponse(AnswerType):
-    field: FieldsResponse
+    field: SubmissionFieldResponse
 
 class SubmissionResponse(SubmissionType, ModelType):
     submission_answers: list[SubmissionAnswerResponse]

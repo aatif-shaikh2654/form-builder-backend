@@ -4,7 +4,7 @@ from sqlalchemy import select, or_, func
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.modules.forms.models import (FieldConditions, Form, FormField, FormSection, FormSettings,
-    FormStatus, QuizSettings)
+    FormStatus, FormType, QuizSettings)
 from app.modules.auth.schema import GetGuestResponse
 from fastapi.exceptions import HTTPException
 from fastapi import status
@@ -75,7 +75,7 @@ async def get_all_forms_query(query: dict, session: GetGuestResponse, db: AsyncS
     total_forms = await db.scalar(db_query.where(form_owner))
     published_count = await db.scalar(db_query.where(form_owner, Form.status == FormStatus.PUBLISHED))
     draft_count = await db.scalar(db_query.where(form_owner, Form.status == FormStatus.DRAFT))
-    quizes_count = await db.scalar(db_query.where(form_owner, Form.quiz_settings is not None))
+    quizes_count = await db.scalar(db_query.where(form_owner, Form.form_type == FormType.QUIZ))
 
     result = await db.execute(
         select(Form)
