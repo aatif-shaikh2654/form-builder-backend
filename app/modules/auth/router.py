@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from app.modules.auth.schemas import (AccessTokens, GetGuestSessionResponse, LoginPayload,
+from app.modules.auth.schema import (AccessTokens, GetGuestSessionResponse, LoginPayload,
     LoginResponse, ProfileResponse, RefreshTokenPayload, RefreshTokenResponse, SignupPayload,
     SignupResponse)
 from app.db.session import DbSession

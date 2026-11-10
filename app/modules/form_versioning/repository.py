@@ -1,12 +1,16 @@
 from fastapi import status
 from fastapi.exceptions import HTTPException
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.modules.form_versioning.models import FormVersions, Submission, SubmissionAnswer, SubmissionStatus
 from app.modules.form_versioning.schema import SaveFormPayload, SubmissionPayload
 from datetime import datetime, timezone
 from app.modules.forms.models import Form
-from app.modules.forms.schemas import FormResponse
+from app.modules.forms.schema import FormResponse
+from app.utils.snapshot import serialize_form_snapshot
+
+
 async def get_latest_draft(form_id: str, db: AsyncSession):
 
     version = await db.execute(
@@ -28,38 +32,29 @@ async def get_latest_version(form_id: str, db: AsyncSession):
 
     return version.scalar_one_or_none()
 
-async def update_draft_version(form_id: str, payload: SaveFormPayload, db: AsyncSession):
+async def update_draft_version(form_id: str, form: Form, db: AsyncSession):
 
     latest_draft = await get_latest_draft(form_id, db)
-    form_content = SaveFormPayload.model_validate(
-        payload,
-        from_attributes=True
-    )
-
-    content = form_content.model_dump(mode="json")
+    content = jsonable_encoder(serialize_form_snapshot(form))
 
     if latest_draft:
         latest_draft.content = content
+        version = latest_draft
     else:
         latest_version = await get_latest_version(form_id, db)
         new_version_number = (latest_version.version_number if latest_version else 0) + 1
 
-        new_version = FormVersions(
+        version = FormVersions(
             form_id=form_id,
             version_number=new_version_number,
             content=content,
         )
 
-        db.add(new_version)
+        db.add(version)
 
-    await db.commit()
-
-    if latest_draft:
-        await db.refresh(latest_draft)
-        return latest_draft
-
-    await db.refresh(new_version)
-    return new_version
+    await db.flush()
+    
+    return version
 
 async def get_published_version(version_id: str, db: AsyncSession):
 

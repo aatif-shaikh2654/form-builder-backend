@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.db.session import DbSession
-from app.modules.forms.schemas import (CreateFormPayload, CreateFormResponse, EditFormPayload,
+from app.modules.forms.schema import (CreateFormPayload, CreateFormResponse, EditFormPayload,
     EditFormResponse, GetAllFormsResponse, GetSingleFormResponse,
     UpdateQuizSettingsPayload,
     UpdateQuizSettingsResponse)

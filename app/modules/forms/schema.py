@@ -1,6 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field, AliasChoices
 from app.common.schema import APIResponse, ModelType
-from app.modules.forms.models import FieldType, FormStatus, FormType, LayoutType
+from app.modules.forms.models import (ConditionActions, ConditionOperator, FieldType, FormStatus,
+    FormType, LayoutType)
 from uuid import UUID
 from datetime import datetime
 from decimal import Decimal
@@ -44,7 +45,26 @@ class QuizSettingsResponse(ModelType, QuizSettingsType):
     form_id: UUID
 
 
+# Fields conditions     
+class ConditionTargetFieldType(BaseModel):
+    label: str
+    field_type: FieldType
 
+    model_config = ConfigDict(from_attributes=True)
+
+
+class FieldsConditionType(BaseModel):
+    target_field_id: UUID
+    condition_operator: ConditionOperator
+    condition_value: dict
+    action: ConditionActions
+
+    model_config = ConfigDict(from_attributes=True)
+
+class FieldsConditionResponse(ModelType, FieldsConditionType):
+    pass
+
+# Fields
 class FieldsType(BaseModel):
     form_id: UUID | None
     section_id: UUID | None
@@ -60,8 +80,17 @@ class FieldsType(BaseModel):
     default_values: dict
     settings: dict
 
+    model_config = ConfigDict(from_attributes=True)
+
+class FieldsPayload(ModelType, FieldsType):
+    conditions: list[FieldsConditionType] | list[dict] = []
+
+
 class FieldsResponse(ModelType, FieldsType):
-    pass
+    conditions: list[FieldsConditionResponse] = Field(
+        default_factory=list,
+        validation_alias="conditions_as_source",
+    )
 
 class SectionsType(BaseModel):
     title: str
@@ -72,6 +101,10 @@ class SectionsType(BaseModel):
     layout_config: dict = {}
     is_visible: bool = True
     fields: list[FieldsResponse] = []
+
+class SectionPayload(ModelType, SectionsType):
+    form_id: UUID
+    fields: list[FieldsPayload] = []
 
 class SectionResponse(ModelType, SectionsType):
     form_id: UUID

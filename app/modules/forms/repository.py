@@ -1,12 +1,14 @@
-from app.modules.forms.schemas import CreateFormPayload
+from app.modules.forms.schema import CreateFormPayload
 from datetime import datetime, timezone
 from sqlalchemy import select, or_, func
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.modules.forms.models import (Form, FormSection, FormSettings, FormStatus, QuizSettings)
-from app.modules.auth.schemas import GetGuestResponse
+from app.modules.forms.models import (FieldConditions, Form, FormField, FormSection, FormSettings,
+    FormStatus, QuizSettings)
+from app.modules.auth.schema import GetGuestResponse
 from fastapi.exceptions import HTTPException
 from fastapi import status
+from uuid import UUID
 
 async def create_form(payload: CreateFormPayload, session: GetGuestResponse, db: AsyncSession) :
 
@@ -107,17 +109,32 @@ async def get_single_form(id: str, session: GetGuestResponse, db: AsyncSession):
         select(Form).options(
             selectinload(Form.form_settings),
             selectinload(Form.quiz_settings),
-            selectinload(Form.sections).selectinload(FormSection.fields),
+            selectinload(Form.sections)
+            .selectinload(FormSection.fields)
+            .selectinload(FormField.conditions_as_source)
+            .selectinload(FieldConditions.target_field),
             selectinload(Form.fields)
+            .selectinload(FormField.conditions_as_source)
+            .selectinload(FieldConditions.target_field)
         ).where(
             Form.id == id,
             or_(Form.owner_id == session["user_id"], Form.guest_session_id == session["session_id"])
-        ))
+        ).execution_options(populate_existing=True))
 
     form = result.scalar_one_or_none()
 
     if not form:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Form not found")
+
+    await db.execute(
+        select(FormField)
+        .where(FormField.form_id == form.id)
+        .options(
+            selectinload(FormField.conditions_as_source)
+            .selectinload(FieldConditions.target_field)
+        )
+        .execution_options(populate_existing=True)
+    )
 
     return form
 

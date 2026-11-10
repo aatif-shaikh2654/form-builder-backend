@@ -7,7 +7,7 @@ import jwt
 from app.db.session import DbSession
 from app.modules.auth.repository import get_user_by_id, get_guest_session
 from app.modules.auth.models import User
-from app.modules.auth.schemas import GetGuestResponse, UserResponse
+from app.modules.auth.schema import GetGuestResponse, UserResponse
 
 async def get_token_user(access_token: str, db: AsyncSession) -> UserResponse:
     payload = jwt.decode(access_token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])

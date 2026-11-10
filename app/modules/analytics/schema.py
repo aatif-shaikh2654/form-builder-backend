@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from app.common.schema import APIResponse, ModelType
 from app.modules.form_versioning.schema import AnswerType, SubmissionType
-from app.modules.forms.schemas import FieldsResponse
+from app.modules.forms.schema import FieldsResponse
 
 class SubmissionAnswerResponse(AnswerType):
     field: FieldsResponse

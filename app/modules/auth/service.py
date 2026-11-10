@@ -1,4 +1,4 @@
-from app.modules.auth.schemas import (AccessTokens, GetGuestResponse, LoginPayload,
+from app.modules.auth.schema import (AccessTokens, GetGuestResponse, LoginPayload,
     RefreshTokenResponse, SignupPayload, UserResponse)
 from app.modules.forms.repository import get_all_forms
 from datetime import datetime, timezone, timedelta

@@ -209,13 +209,13 @@ class ConditionOperator(Enum):
     EQUALS = "EQUALS"
     NOT_EQUALS = "NOT_EQUALS"
     CONTAINS = "CONTAINS"
-    GREATER_THAN = "GREATER_THAN"
-    LESS_THAN = "LESS_THAN"
+    NOT_CONTAINS = "NOT_CONTAINS"
+    EMPTY = "EMPTY"
+    FILLED = "FILLED"
 
 class ConditionActions(Enum):
     SHOW = "SHOW"
     HIDE = "HIDE"
-    JUMP_TO_SECTION = "JUMP_TO_SECTION"
 
 class FieldConditions(Base):
     __tablename__ = "field_conditions"

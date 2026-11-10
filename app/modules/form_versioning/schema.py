@@ -1,6 +1,6 @@
 # Publish form type
 from app.common.schema import APIResponse, ModelType
-from app.modules.forms.schemas import (FieldsResponse, FieldsType, FormResponse, SectionResponse,
+from app.modules.forms.schema import (FieldsPayload, FieldsType, FormResponse, SectionPayload,
     SectionsType, SingleForm)
 from pydantic import BaseModel
 from datetime import datetime
@@ -10,8 +10,8 @@ from app.modules.form_versioning.models import SubmissionStatus
 class SaveFormPayload(BaseModel):
     title: str | None
     description: str | None
-    sections: list[dict] | list[SectionResponse] | list[SectionsType] = []
-    fields: list[dict] | list[FieldsResponse] | list[FieldsType] = []
+    sections: list[dict] | list[SectionPayload] | list[SectionsType] = []
+    fields: list[dict] | list[FieldsPayload] | list[FieldsType] = []
 
 class SaveFormResponse(APIResponse):
     data: SingleForm

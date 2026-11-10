@@ -3,14 +3,16 @@ from fastapi import FastAPI
 import app.db.base as db
 from fastapi.middleware.cors import CORSMiddleware
 from app.utils.exceptions import generic_error_handle
-from app.modules.auth.router import router as auth_router
-from app.modules.forms.router import router as forms_router
-from app.modules.form_versioning.router import router as form_versioning_router
-from app.modules.analytics.router import router as analytics_router
 from app.core.config import ALLOW_ORIGINS
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 
+# Routes path
+from app.modules.auth.router import router as auth_router
+from app.modules.forms.router import router as forms_router
+from app.modules.form_versioning.router import router as form_versioning_router
+from app.modules.analytics.router import router as analytics_router
+from app.modules.ai.router import router as ai_router
 
 
 app = FastAPI()
@@ -41,3 +43,4 @@ app.include_router(auth_router, prefix=prefix)
 app.include_router(forms_router, prefix=prefix)
 app.include_router(form_versioning_router, prefix=prefix)
 app.include_router(analytics_router, prefix=prefix)
+app.include_router(ai_router, prefix=prefix)

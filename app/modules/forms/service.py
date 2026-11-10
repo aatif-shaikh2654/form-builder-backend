@@ -1,12 +1,14 @@
-from app.modules.forms.schemas import (CreateFormPayload, EditFormPayload,
+from app.modules.forms.schema import (CreateFormPayload, EditFormPayload,
     UpdateQuizSettingsPayload)
 from fastapi.exceptions import HTTPException
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 from fastapi import status
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.modules.auth.schemas import GetGuestResponse
+from app.modules.auth.schema import GetGuestResponse
 from app.modules.forms.repository import create_form, get_form, get_single_form, get_all_forms_query, get_form_settings, create_quiz_settings, get_quiz_settings
-from app.modules.forms.models import FormSettings, FormType
+from app.modules.forms.models import FormField, FormType, FieldConditions
+from sqlalchemy.inspection import inspect
 
 async def create_form_service(payload: CreateFormPayload, session: GetGuestResponse, db: AsyncSession):
     form = await create_form(payload, session, db)
