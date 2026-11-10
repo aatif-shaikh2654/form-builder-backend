@@ -112,10 +112,12 @@ async def get_single_form(id: str, session: GetGuestResponse, db: AsyncSession):
             selectinload(Form.sections)
             .selectinload(FormSection.fields)
             .selectinload(FormField.conditions_as_source)
-            .selectinload(FieldConditions.target_field),
+            .selectinload(FieldConditions.target_field)
+            .selectinload(FormField.conditions_as_source),
             selectinload(Form.fields)
             .selectinload(FormField.conditions_as_source)
             .selectinload(FieldConditions.target_field)
+            .selectinload(FormField.conditions_as_source)
         ).where(
             Form.id == id,
             or_(Form.owner_id == session["user_id"], Form.guest_session_id == session["session_id"])
@@ -125,16 +127,6 @@ async def get_single_form(id: str, session: GetGuestResponse, db: AsyncSession):
 
     if not form:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Form not found")
-
-    await db.execute(
-        select(FormField)
-        .where(FormField.form_id == form.id)
-        .options(
-            selectinload(FormField.conditions_as_source)
-            .selectinload(FieldConditions.target_field)
-        )
-        .execution_options(populate_existing=True)
-    )
 
     return form
 

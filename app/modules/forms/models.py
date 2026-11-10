@@ -131,7 +131,7 @@ class FormField(Base):
     __tablename__ = "fields"
 
     form_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("forms.id", ondelete="CASCADE"), index=True, nullable=True)
-    section_id: Mapped[UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("sections.id"), nullable=True)
+    section_id: Mapped[UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("sections.id", ondelete="CASCADE"), nullable=True)
     label: Mapped[str] = mapped_column(String(500), nullable=False)
     description: Mapped[str | None] = mapped_column(String, nullable=True)
     field_type: Mapped[FieldType] = mapped_column(SQLAlchemyEnum(FieldType, name="field_type"), default=FieldType.SHORT_TEXT)
@@ -182,7 +182,7 @@ class QuizSettings(Base):
 class FieldAnswerKey(Base):
     __tablename__ = "field_answer_keys"
 
-    field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id"), nullable=False)
+    field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id", ondelete="CASCADE"), nullable=False)
     correct_answer: Mapped[dict] = mapped_column(JSONB, nullable=False)
     explanation: Mapped[str] = mapped_column(String, nullable=True)
 
@@ -192,7 +192,7 @@ class FieldAnswerKey(Base):
 class FieldScoring(Base):
     __tablename__ = "field_scoring"
 
-    field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id"), nullable=False)
+    field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id", ondelete="CASCADE"), nullable=False)
     points: Mapped[Decimal] = mapped_column(Numeric(8, 2), default=1)
     allow_partial_credit: Mapped[bool] = mapped_column(Boolean, default=False)
 
@@ -220,8 +220,8 @@ class ConditionActions(Enum):
 class FieldConditions(Base):
     __tablename__ = "field_conditions"
 
-    source_field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id"), nullable=False)
-    target_field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id"), nullable=False)
+    source_field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id", ondelete="CASCADE"), nullable=False)
+    target_field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id", ondelete="CASCADE"), nullable=False)
     condition_operator: Mapped[Enum] = mapped_column(SQLAlchemyEnum(ConditionOperator, name="condition_operator"), nullable=False)
     condition_value: Mapped[dict] = mapped_column(JSONB, nullable=False)
     action: Mapped[ConditionActions] = mapped_column(SQLAlchemyEnum(ConditionActions, name="action"), nullable=False)

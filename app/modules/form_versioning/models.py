@@ -42,7 +42,7 @@ class SubmissionAnswer(Base):
     __tablename__ = "submission_answers"
 
     submission_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("submissions.id", ondelete="CASCADE"), index=True, nullable=False)
-    field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id"), nullable=False)
+    field_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("fields.id", ondelete="CASCADE"), nullable=False)
     answer_text: Mapped[str] = mapped_column(String, nullable=True)
     answer_json: Mapped[dict | list | None] = mapped_column(JSONB, nullable=True)
 
