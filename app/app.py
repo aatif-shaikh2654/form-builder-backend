@@ -31,10 +31,11 @@ app.add_middleware(
 )
 
 # Uploads 
-UPLOAD_DIR = Path("uploads").resolve()
+UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 app.mount(
     "/uploads",
-    StaticFiles(directory=UPLOAD_DIR),
+    StaticFiles(directory=UPLOAD_DIR, check_dir=False),
     name="uploads"
 )
 
