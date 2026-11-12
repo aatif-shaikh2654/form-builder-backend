@@ -12,7 +12,6 @@ from app.core.config import ENV, JWT_ACCESS_TOKEN_EXPIRE_MINUTES, JWT_SECRET_KEY
 import jwt
 from fastapi import Response
 from app.modules.auth.models import GuestSession
-from app.common.constant import ENVIRONMENT
 
 
 password_hash = PasswordHash.recommended()
@@ -113,7 +112,7 @@ async def login_user(db: AsyncSession, payload: LoginPayload) -> AccessTokens:
 
 def set_token_cookies(response: Response, access_token: str, refresh_token: str):
 
-    is_production = ENV == ENVIRONMENT.PROD
+    is_production = ENV == "prod"
 
     response.set_cookie(
         key="access_token",
