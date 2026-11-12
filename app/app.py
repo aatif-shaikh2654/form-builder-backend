@@ -8,6 +8,7 @@ from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 
 # Routes path
+from app.health import router as health_router 
 from app.modules.auth.router import router as auth_router
 from app.modules.forms.router import router as forms_router
 from app.modules.form_versioning.router import router as form_versioning_router
@@ -39,6 +40,7 @@ app.mount(
 
 # Routers
 prefix = "/api/v1"
+app.include_router(health_router)
 app.include_router(auth_router, prefix=prefix)
 app.include_router(forms_router, prefix=prefix)
 app.include_router(form_versioning_router, prefix=prefix)
