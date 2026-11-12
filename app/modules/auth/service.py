@@ -112,11 +112,13 @@ async def login_user(db: AsyncSession, payload: LoginPayload) -> AccessTokens:
 
 def set_token_cookies(response: Response, access_token: str, refresh_token: str):
 
+    is_production = ENV == "prod"
+
     response.set_cookie(
         key="access_token",
         value=access_token,
         httponly=True,
-        secure=False,
+        secure=is_production,
         samesite="lax",
         max_age=JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
         path="/",
@@ -126,7 +128,7 @@ def set_token_cookies(response: Response, access_token: str, refresh_token: str)
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=False,
+        secure=is_production,
         samesite="lax",
         max_age=JWT_REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
         path="/",
