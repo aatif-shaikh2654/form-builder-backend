@@ -60,7 +60,7 @@ async def upload_files(files: list[UploadFile]):
     uploaded_files = []
 
     for file in files:
-        metadata = await save_upload_file(file, "uploads/submission")
+        metadata = await save_upload_file(file, "temp/uploads/submission")
         uploaded_files.append(metadata)
 
     return {
