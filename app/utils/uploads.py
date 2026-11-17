@@ -1,40 +1,81 @@
 from fastapi import UploadFile
+from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import uuid4
 from pathlib import Path
+from io import BytesIO
 from app.core.r2 import r2_client
 from app.core.config import R2_BUCKET_NAME
+from starlette.concurrency import run_in_threadpool
+from app.modules.form_versioning.models import UploadFile as UploadFileModel
 
 
-async def save_upload_file(file: UploadFile):
+async def save_upload_file(
+    file: UploadFile,
+    db: AsyncSession
+):
+    storage_key = None
 
-    file_id = str(uuid4())
+    try:
+        # Read uploaded file
+        file_content = await file.read()
+        file_size = len(file_content)
 
-    extension = Path(file.filename or "").suffix
+        extension = Path(file.filename or "").suffix
+        stored_filename = f"{uuid4()}{extension}"
 
-    stored_filename = f"{file_id}{extension}"
+        storage_key = f"uploads/{stored_filename}"
 
-    storage_key = f"uploads/{stored_filename}"
+        # Create a new readable stream
+        file_stream = BytesIO(file_content)
 
-    file.file.seek(0, 2)
-    file_size = file.file.tell()
-    file.file.seek(0)
+        # Upload to R2
+        await run_in_threadpool(
+            r2_client.upload_fileobj,
+            file_stream,
+            R2_BUCKET_NAME,
+            storage_key,
+            ExtraArgs={
+                "ContentType": file.content_type or "application/octet-stream"
+            },
+        )
 
-    r2_client.upload_fileobj(
-        file.file,
-        R2_BUCKET_NAME,
-        storage_key,
-                ExtraArgs={
-            "ContentType": file.content_type or "application/octet-stream"
-        },
-    )
+        # Save metadata
+        upload_file = UploadFileModel(
+            original_filename=file.filename or stored_filename,
+            storage_key=storage_key,
+            mime_type=file.content_type or "application/octet-stream",
+            size=file_size,
+        )
 
-    await file.close()
+        db.add(upload_file)
 
-    return {
-        "id": file_id,
-        "original_name": file.filename,
-        "stored_filename": stored_filename,
-        "storage_key": storage_key,
-        "mime_type": file.content_type,
-        "size": file_size
-    }
+        await db.commit()
+        await db.refresh(upload_file)
+
+        return {
+                "id": upload_file.id,
+                "original_name": upload_file.original_filename,
+                "stored_filename": stored_filename,
+                "mime_type": upload_file.mime_type,
+                "size": file_size
+            }
+
+    except Exception:
+        await db.rollback()
+
+        if storage_key:
+            await run_in_threadpool(
+                r2_client.delete_object,
+                Bucket=R2_BUCKET_NAME,
+                Key=storage_key,
+            )
+
+        raise
+
+    finally:
+        await file.close()
+
+    
+
+
+   

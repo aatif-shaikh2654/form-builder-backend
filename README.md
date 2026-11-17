@@ -1,4 +1,4 @@
 # form-builder-backend
 
-alembic revision --autogenerate -m "values fixed defualt"
+alembic revision --autogenerate -m "upload file"
 alembic upgrade head

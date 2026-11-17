@@ -61,7 +61,6 @@ class FileResponse(BaseModel):
     id: UUID
     original_name: str
     stored_filename: str
-    storage_key: str
     mime_type: str
     size: int
 class UploadFileResponse(APIResponse):

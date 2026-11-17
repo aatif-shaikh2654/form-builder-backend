@@ -3,7 +3,8 @@ from fastapi.exceptions import HTTPException
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select, func, literal_column, cast
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.modules.form_versioning.models import FormVersions, Submission, SubmissionAnswer, SubmissionStatus
+from app.modules.form_versioning.models import (FormVersions, Submission, SubmissionAnswer,
+    SubmissionStatus, UploadFile)
 from app.modules.form_versioning.schema import SubmissionPayload
 from datetime import datetime, timezone
 from app.modules.forms.models import Form
@@ -103,3 +104,9 @@ async def store_submission(form_id: str, user_id: str | None, payload: Submissio
     await db.commit()
 
     return
+
+async def get_upload_file(file_id: str, db: AsyncSession):
+    return (await db.execute(
+        select(UploadFile)
+        .where(UploadFile.id == file_id))
+    ).scalar_one_or_none()

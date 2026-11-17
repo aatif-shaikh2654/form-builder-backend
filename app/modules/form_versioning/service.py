@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.modules.forms.models import Form
 from app.modules.form_versioning.schema import SaveFormPayload, SubmissionPayload
 from app.modules.auth.schema import GetGuestResponse
-from app.modules.form_versioning.repository import get_latest_draft, update_draft_version, get_latest_draft, get_published_version, store_submission, get_latest_version
+from app.modules.form_versioning.repository import get_latest_draft, update_draft_version, get_latest_draft, get_published_version, store_submission, get_latest_version, get_upload_file
 from app.modules.form_versioning.helpers import get_existing_fields, upsert_sections, upsert_field_conditions, upsert_fields, delete_removed_fields, delete_removed_sections
 from app.core.r2 import generate_download_url
 
@@ -148,16 +148,21 @@ async def submit_form_service(form_id: str, payload: SubmissionPayload, db: Asyn
 
     return
 
-async def get_download_url_service(form_id: str, user: GetCurrentUser, db: AsyncSession, storage_key: str):
+async def get_download_url_service(form_id: str, user: GetCurrentUser, db: AsyncSession, file_id: str):
 
     session = { "user_id": user.id, "session_id": None }
     
     await get_form(form_id, session, db)
 
-    if not storage_key:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
+    if not file_id:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File id not found")
 
-    url = generate_download_url(storage_key)
+    file = await get_upload_file(file_id, db)
+
+    if not file:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
+    
+    url = generate_download_url(file.storage_key)
 
     return url
 

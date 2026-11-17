@@ -57,12 +57,12 @@ async def get_published_form(slug: str, db: DbSession):
     }
 
 @router.post("/upload", response_model=UploadFileResponse)
-async def upload_files(files: list[UploadFile]):
+async def upload_files(files: list[UploadFile], db: DbSession):
 
     uploaded_files = []
 
     for file in files:
-        metadata = await save_upload_file(file)
+        metadata = await save_upload_file(file, db)
         uploaded_files.append(metadata)
 
     return {
@@ -72,9 +72,9 @@ async def upload_files(files: list[UploadFile]):
     }
 
 @router.get("/{form_id}/download-url", response_model=GetUploadUrlResponse)
-async def get_download_url(form_id: str, user: GetCurrentUser, db: DbSession, storage_key: str):
+async def get_download_url(form_id: str, user: GetCurrentUser, db: DbSession, file_id: str):
 
-    url = await get_download_url_service(form_id, user, db, storage_key)
+    url = await get_download_url_service(form_id, user, db, file_id)
 
     return {
         "success": True,

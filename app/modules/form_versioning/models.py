@@ -1,5 +1,5 @@
 from app.db.database import Base
-from sqlalchemy import ForeignKey, Integer, DateTime, String, Enum as SQLAlchemyEnum, Index
+from sqlalchemy import ForeignKey, Integer, DateTime, String, Enum as SQLAlchemyEnum, Index, BigInteger
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime, timezone
@@ -56,3 +56,12 @@ class SubmissionAnswer(Base):
             postgresql_using="gin"
         ),
     )
+
+
+class UploadFile(Base):
+    __tablename__ = "uploaded_files"
+
+    original_filename: Mapped[str] = mapped_column(String(500), nullable=False)
+    storage_key: Mapped[str] = mapped_column(String(500), unique=True, nullable=False)
+    mime_type: Mapped[str] = mapped_column(String(100), nullable=False)
+    size: Mapped[int] = mapped_column(BigInteger, nullable=False)
