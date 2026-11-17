@@ -12,3 +12,9 @@ JWT_REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("JWT_REFRESH_TOKEN_EXPIRE_DAYS"))
 
 # CORS
 ALLOW_ORIGINS = os.getenv("ALLOW_ORIGINS", "")
+
+# Cloudflare r2
+R2_ACCOUNT_ID = os.getenv("R2_ACCOUNT_ID", "")
+R2_ACCESS_KEY_ID = os.getenv("R2_ACCESS_KEY_ID", "")
+R2_SECRET_ACCESS_KEY = os.getenv("R2_SECRET_ACCESS_KEY", "")
+R2_BUCKET_NAME = os.getenv("R2_BUCKET_NAME", "")

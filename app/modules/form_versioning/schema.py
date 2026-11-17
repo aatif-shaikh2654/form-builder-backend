@@ -55,4 +55,18 @@ class AnswerType(ModelType, AnswerResponse):
 class SubmissionPayload(BaseModel):
     respondent_metadata: dict
     answers: list[AnswerResponse]
-    
+
+# Upload file response
+class FileResponse(BaseModel):
+    id: UUID
+    original_name: str
+    stored_filename: str
+    storage_key: str
+    mime_type: str
+    size: int
+class UploadFileResponse(APIResponse):
+    data: list[FileResponse]
+
+# Get Upload url response
+class GetUploadUrlResponse(APIResponse):
+    data: str

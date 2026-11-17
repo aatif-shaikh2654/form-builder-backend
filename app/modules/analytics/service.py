@@ -10,3 +10,5 @@ async def get_submission_analytics_service(form_id: str, user: User, query: dict
     submissions = await get_submissions(form_id, session, query, db)
 
     return submissions
+
+    

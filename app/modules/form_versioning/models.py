@@ -1,5 +1,5 @@
 from app.db.database import Base
-from sqlalchemy import ForeignKey, Integer, DateTime, String, Enum as SQLAlchemyEnum
+from sqlalchemy import ForeignKey, Integer, DateTime, String, Enum as SQLAlchemyEnum, Index
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime, timezone
@@ -48,3 +48,11 @@ class SubmissionAnswer(Base):
 
     submission = relationship("Submission", foreign_keys=[submission_id], back_populates="submission_answers")
     field = relationship("FormField", foreign_keys=[field_id], back_populates="submission_answers")
+
+    __table_args__ = (
+        Index(
+            "ix_submission_answers_answer_json",
+            "answer_json",
+            postgresql_using="gin"
+        ),
+    )

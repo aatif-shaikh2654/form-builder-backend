@@ -1,27 +1,32 @@
 from fastapi import UploadFile
 from uuid import uuid4
 from pathlib import Path
+from app.core.r2 import r2_client
+from app.core.config import R2_BUCKET_NAME
 
 
-async def save_upload_file(file: UploadFile, path: str):
+async def save_upload_file(file: UploadFile):
 
-    UPLOAD_DIR = Path(path)
-    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-    
     file_id = str(uuid4())
 
     extension = Path(file.filename or "").suffix
 
     stored_filename = f"{file_id}{extension}"
 
-    file_path = UPLOAD_DIR / stored_filename
+    storage_key = f"uploads/{stored_filename}"
 
-    size = 0
+    file.file.seek(0, 2)
+    file_size = file.file.tell()
+    file.file.seek(0)
 
-    with file_path.open("wb") as buffer:
-        while chunk := await file.read(1024 * 1024):
-            size += len(chunk)
-            buffer.write(chunk)
+    r2_client.upload_fileobj(
+        file.file,
+        R2_BUCKET_NAME,
+        storage_key,
+                ExtraArgs={
+            "ContentType": file.content_type or "application/octet-stream"
+        },
+    )
 
     await file.close()
 
@@ -29,7 +34,7 @@ async def save_upload_file(file: UploadFile, path: str):
         "id": file_id,
         "original_name": file.filename,
         "stored_filename": stored_filename,
-        "path": str(file_path),
+        "storage_key": storage_key,
         "mime_type": file.content_type,
-        "size": size
+        "size": file_size
     }

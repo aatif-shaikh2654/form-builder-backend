@@ -22,3 +22,4 @@ class FormAnalyticsResponse(BaseModel):
 
 class FormAnalyticsQueryResponse(APIResponse):
     data: FormAnalyticsResponse
+

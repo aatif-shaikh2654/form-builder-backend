@@ -22,3 +22,4 @@ async def get_submission_analytics(form_id: str, user: GetCurrentUser, db: DbSes
         "message": "Submission analytics fetched successfully",
         "data": response
     }
+

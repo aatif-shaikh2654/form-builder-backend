@@ -25,7 +25,7 @@ async def get_submissions(form_id: str, session: GetGuestSession, query: dict, d
         ))
 
 
-    submissions = await db.execute(
+    submissions = (await db.execute(
         select(Submission)
         .options(
             selectinload(Submission.submission_answers)
@@ -34,14 +34,14 @@ async def get_submissions(form_id: str, session: GetGuestSession, query: dict, d
         .where(*filters)
         .order_by(Submission.created_at.desc())
         .offset((page - 1) * limit)
-        .limit(limit))
+        .limit(limit))).scalars().all()
 
     db_query = select(func.count()).select_from(Submission)
     count_query = db_query.where(*filters)
     total = await db.scalar(count_query)
 
     return {
-        "items": submissions.scalars().all(),
+        "items": submissions,
         "total": total or 0,
         "page": page,
         "limit" : limit,

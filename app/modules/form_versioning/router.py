@@ -1,9 +1,11 @@
+from app.modules.forms.repository import get_form
 from fastapi import APIRouter, Form, UploadFile, File
 from app.modules.form_versioning.schema import (DraftFormResponse, GetPublishedFormResponse,
-    PublishFormResponse, SaveFormPayload, SaveFormResponse, SubmissionPayload)
-from app.core.dependencies import GetGuestSession
+    GetUploadUrlResponse, PublishFormResponse, SaveFormPayload, SaveFormResponse,
+    SubmissionPayload, UploadFileResponse)
+from app.core.dependencies import GetCurrentUser, GetGuestSession
 from app.db.session import DbSession
-from app.modules.form_versioning.service import publish_form_service, save_draft_form_service, get_draft_form_service, get_published_form_service, submit_form_service
+from app.modules.form_versioning.service import publish_form_service, save_draft_form_service, get_draft_form_service, get_published_form_service, submit_form_service, get_download_url_service
 from app.common.schema import APIResponse
 from app.utils.uploads import save_upload_file
 
@@ -54,19 +56,30 @@ async def get_published_form(slug: str, db: DbSession):
         "data": response
     }
 
-@router.post("/upload")
+@router.post("/upload", response_model=UploadFileResponse)
 async def upload_files(files: list[UploadFile]):
 
     uploaded_files = []
 
     for file in files:
-        metadata = await save_upload_file(file, "temp/uploads/submission")
+        metadata = await save_upload_file(file)
         uploaded_files.append(metadata)
 
     return {
         "success": True,
         "message": "Files uploaded successfully",
         "data": uploaded_files
+    }
+
+@router.get("/{form_id}/download-url", response_model=GetUploadUrlResponse)
+async def get_download_url(form_id: str, user: GetCurrentUser, db: DbSession, storage_key: str):
+
+    url = await get_download_url_service(form_id, user, db, storage_key)
+
+    return {
+        "success": True,
+        "message": "Upload url fetched successfully",
+        "data": url
     }
 
 @router.post("/{form_id}/submit", response_model=APIResponse)

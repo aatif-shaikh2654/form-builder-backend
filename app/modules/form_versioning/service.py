@@ -1,4 +1,4 @@
-from app.core.dependencies import GetGuestSession
+from app.core.dependencies import GetCurrentUser, GetGuestSession
 from app.modules.forms.repository import get_single_form, get_form
 from fastapi import status
 from fastapi.exceptions import HTTPException
@@ -10,6 +10,7 @@ from app.modules.form_versioning.schema import SaveFormPayload, SubmissionPayloa
 from app.modules.auth.schema import GetGuestResponse
 from app.modules.form_versioning.repository import get_latest_draft, update_draft_version, get_latest_draft, get_published_version, store_submission, get_latest_version
 from app.modules.form_versioning.helpers import get_existing_fields, upsert_sections, upsert_field_conditions, upsert_fields, delete_removed_fields, delete_removed_sections
+from app.core.r2 import generate_download_url
 
 async def save_draft_form_service(form_id: str, payload: SaveFormPayload, session: GetGuestResponse, db: AsyncSession):
 
@@ -146,3 +147,17 @@ async def submit_form_service(form_id: str, payload: SubmissionPayload, db: Asyn
     await store_submission(form_id=form_id, user_id=None, payload=payload, db=db)
 
     return
+
+async def get_download_url_service(form_id: str, user: GetCurrentUser, db: AsyncSession, storage_key: str):
+
+    session = { "user_id": user.id, "session_id": None }
+    
+    await get_form(form_id, session, db)
+
+    if not storage_key:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
+
+    url = generate_download_url(storage_key)
+
+    return url
+

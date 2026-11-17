@@ -1,14 +1,15 @@
 from fastapi import status
 from fastapi.exceptions import HTTPException
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select
+from sqlalchemy import select, func, literal_column, cast
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.modules.form_versioning.models import FormVersions, Submission, SubmissionAnswer, SubmissionStatus
-from app.modules.form_versioning.schema import SaveFormPayload, SubmissionPayload
+from app.modules.form_versioning.schema import SubmissionPayload
 from datetime import datetime, timezone
 from app.modules.forms.models import Form
-from app.modules.forms.schema import FormResponse
+from sqlalchemy.dialects.postgresql import JSONB
 from app.utils.snapshot import serialize_form_snapshot
+from uuid import UUID
 
 
 async def get_latest_draft(form_id: str, db: AsyncSession):
